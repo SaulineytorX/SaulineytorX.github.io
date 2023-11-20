@@ -1,0 +1,49 @@
+{% extends 'layouts/base_forms.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-success me-2" href="{% url 'export_clients_csv' %}">Exportar a CSV</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre(s)</th>
+                <th>Apellido(s)</th>
+                <th>Edad</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Nota</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ client.names }}</td>
+                <td>{{ client.apellidos }}</td>
+                <td>{{ client.edad }}</td>
+                <td>{{ client.telefono }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.nota }}</td>
+                <td>
+                    <div class="d-flex">
+                        <form action="{% url 'client_detail' client.id %}" method="GET">
+                            <button class="btn btn-warning me-2">Editar</button>
+                        </form>
+                        <form action="{% url 'delete_client' client.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-danger">Borrar</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

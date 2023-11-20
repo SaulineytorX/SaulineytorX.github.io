@@ -1,0 +1,5 @@
+db.sqlite3
+djangocrudtutorial
+venv
+__pycache__
+settings_dev.py
